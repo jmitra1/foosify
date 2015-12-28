@@ -1,0 +1,1 @@
+web: gunicorn foosify.wsgi --log-file -

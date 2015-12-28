@@ -1,0 +1,9 @@
+{% include "foosify/base.html" %}
+
+<title>Foosify</title>
+<div>Hello! Here are the latest matches:</div>
+<ul>
+{% for match in matches %}
+  <li>{{ match.date }} -- {{ match.get_player_names }}</li>
+{% endfor %}
+</ul>
