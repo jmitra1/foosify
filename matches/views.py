@@ -1,5 +1,5 @@
 from django import forms
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Match
 from .forms import MatchForm
@@ -17,7 +17,7 @@ def new_match(request):
 			match.save()
 			match.players = form.cleaned_data["players"]
 			match.save()
-			return redirect("index")
+			return redirect("/")
 	else:
 		form = MatchForm()
 	return render(request, "match.html", {"form": form})
