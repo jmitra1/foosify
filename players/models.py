@@ -15,10 +15,7 @@ class Player(models.Model):
 		return self.matches.all()
 
 	def win_rate(self):
-		if self.wins < 0:
-			return 0
-		else:
-			return self.wins / len(self.matches.all()) * 100
+		return (self.wins / (self.matches.count() or 1)) * 100
 
 	def __unicode__(self):
 		return self.user.username

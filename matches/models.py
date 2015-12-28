@@ -1,5 +1,4 @@
 from django.db import models
-from django.forms import ModelForm
 from django.contrib.auth.models import User
 from players.models import Player
 import datetime
@@ -13,10 +12,7 @@ class Match(models.Model):
 	# quality = models.IntegerField()
 
 	def get_player_names(self):
-		player_name_list = []
-		for player in self.players.all():
-			player_name_list.append(player.user.username)
-		return ", ".join(player_name_list)
+		return ", ".join(self.players.values_list("user__username", flat=True))
 
 	class Meta:
 		verbose_name_plural = "matches"
@@ -24,9 +20,3 @@ class Match(models.Model):
 
 	def __unicode__(self):
 		return unicode(self.id)
-
-# Make a basic ModelForm for creating new matches.
-class MatchForm(ModelForm):
-	class Meta:
-		model = Match
-		fields = ["players"]
