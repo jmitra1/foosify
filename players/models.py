@@ -1,6 +1,7 @@
+from __future__ import division
+from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db import models
-from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
 # This is my player model. There are many like it, but this one is mine.
@@ -9,13 +10,17 @@ class Player(models.Model):
 	user = models.OneToOneField(User, primary_key=True)
 	rating_mu = models.FloatField(default=25)
 	rating_sigma = models.FloatField(default=8.33333)
-	wins = models.IntegerField(default=0)
 
-	def get_player_matches(self):
-		return self.matches.all()
+	def get_wins(self):
+		return self.matches.filter(winners=self)
 
 	def win_rate(self):
-		return (self.wins / (self.matches.count() or 1)) * 100
+		wins = self.get_wins().count()
+		matches = self.matches.count()
+		try:
+			return round((wins / matches) * 100, 1)
+		except ZeroDivisionError:
+			return 0.0
 
 	def __unicode__(self):
 		return self.user.username

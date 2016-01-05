@@ -1,0 +1,14 @@
+{% include "foosify/base.html" %}
+
+<h2>{{ player.user.username }}</h2>
+<p>Your skill is {{ player.rating_mu }} (σ={{ player.rating_sigma }})!</p>
+<p>You've won {{ player.get_wins.count }} game(s)!</p>
+<p>You've played {{ player.matches.count }} game(s), with a {{ player.win_rate }}% win rate!</p>
+<p>Here are your latest games:
+<ul>
+  {% for match in player.matches.all %}
+    <li>{{ match.date }} -- {{ match.get_player_names }}</li>
+  {% empty %}
+    No games found. Play some foosball!
+  {% endfor %}
+</p>

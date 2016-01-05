@@ -15,14 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from . import views
-from matches import views as match_views
+from django.contrib.auth.decorators import login_required
+from matches.views import CreateMatch
 from players import views as player_views
+from . import views
 
 urlpatterns = [
 	url(r"^$", views.index),
-    url(r"^player/(?P<player_id>[0-9]+)", player_views.profile),
+    url(r"^player/(?P<username>\w+)", player_views.profile),
     url(r"^accounts/", include("allauth.urls")),
     url(r"^admin", include(admin.site.urls)),
-    url(r"^new", match_views.new_match),
+    url(r"^new", login_required(CreateMatch.as_view(success_url="/"))),
 ]
