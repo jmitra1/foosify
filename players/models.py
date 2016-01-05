@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify
 # It extends the main User class and adds trueskill and stats-related fields.
 class Player(models.Model):
 	user = models.OneToOneField(User, primary_key=True)
-	slug = models.SlugField(editable=True)
+	slug = models.SlugField(editable=False)
 	rating_mu = models.FloatField(default=25)
 	rating_sigma = models.FloatField(default=8.33333)
 
@@ -40,8 +40,10 @@ def create_player(sender, **kwargs):
 	created = kwargs.get("created", False)
 	if created:
 		new_player = Player()
-		new_player.user = instance
-		new_player.slug = slugify(instance.username)
-		new_player.save()
+	else:
+		new_player = instance.player
+	new_player.user = instance
+	new_player.slug = slugify(instance.username)
+	new_player.save()
 
 # Update your stats when a new Match is saved.
