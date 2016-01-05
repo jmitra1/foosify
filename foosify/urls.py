@@ -17,13 +17,13 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from matches.views import CreateMatch
-from players import views as player_views
+from players.views import PlayerDetail
 from . import views
 
 urlpatterns = [
 	url(r"^$", views.index),
-    url(r"^player/(?P<username>\w+)", player_views.profile),
     url(r"^accounts/", include("allauth.urls")),
     url(r"^admin", include(admin.site.urls)),
+    url(r"^@(?P<slug>[-\w]+)", PlayerDetail.as_view()),
     url(r"^new", login_required(CreateMatch.as_view(success_url="/"))),
 ]

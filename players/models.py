@@ -3,11 +3,13 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db import models
 from django.db.models.signals import post_save
+from django.template.defaultfilters import slugify
 
 # This is my player model. There are many like it, but this one is mine.
 # It extends the main User class and adds trueskill and stats-related fields.
 class Player(models.Model):
 	user = models.OneToOneField(User, primary_key=True)
+	slug = models.SlugField(editable=True)
 	rating_mu = models.FloatField(default=25)
 	rating_sigma = models.FloatField(default=8.33333)
 
@@ -22,6 +24,12 @@ class Player(models.Model):
 		except ZeroDivisionError:
 			return 0.0
 
+	# Sets the slug to the username when you save the Player. Will break
+	# if you change the User's username without saving the Player.
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.user.username)
+		super(Player, self).save(*args, **kwargs)
+
 	def __unicode__(self):
 		return self.user.username
 
@@ -33,6 +41,7 @@ def create_player(sender, **kwargs):
 	if created:
 		new_player = Player()
 		new_player.user = instance
+		new_player.slug = slugify(instance.username)
 		new_player.save()
 
 # Update your stats when a new Match is saved.
