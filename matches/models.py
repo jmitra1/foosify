@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import User
 from players.models import Player
 import datetime
 
@@ -11,8 +11,21 @@ class Match(models.Model):
 	losers = models.ManyToManyField(Player, related_name="match_losers")
 	# quality = models.IntegerField()
 
-	def get_player_names(self):
-		return ", ".join(self.players.values_list("user__username", flat=True))
+	def get_players(self):
+		players = self.players.values()
+		string = ""
+		first = True
+		for player in players:
+			if first:
+				first = False
+			else:
+				string += ", "
+			string += "<a href='@" + player["slug"] + "'>"
+			string += player["slug"]
+			string += "</a>"
+
+		#return ", ".join(self.players.values_list("user__username", flat=True))
+		return string
 
 	class Meta:
 		verbose_name_plural = "matches"

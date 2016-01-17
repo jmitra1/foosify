@@ -1,9 +1,10 @@
 {% include "foosify/base.html" %}
 
 <title>Foosify</title>
+<h2>foosify</h2>
 <div>Hello! Here are the latest matches:</div>
 <ul>
 {% for match in object_list %}
-  <li>{{ match.date }} -- {{ match.get_player_names }}</li>
+  <li>{{ match.date }} -- {{ match.get_players | safe }}</li>
 {% endfor %}
 </ul>

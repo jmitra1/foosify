@@ -7,7 +7,7 @@
 <p>Here are your latest games:
 <ul>
   {% for match in player.matches.all %}
-    <li>{{ match.date }} -- {{ match.get_player_names }}</li>
+    <li>{{ match.date }} -- {{ match.get_players | safe }}</li>
   {% empty %}
     No games found. Play some foosball!
   {% endfor %}
