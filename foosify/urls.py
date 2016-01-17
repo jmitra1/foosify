@@ -16,13 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
-from matches.views import CreateMatch, MatchList
+from matches.views import CreateMatch, UpdateMatch, MatchList
 from players.views import PlayerDetail
 
 urlpatterns = [
 	url(r"^$", MatchList.as_view()),
     url(r"^@(?P<slug>[-\w]+)", PlayerDetail.as_view()),
-    url(r"^new", login_required(CreateMatch.as_view(success_url="/"))),
+    url(r"^match/new", login_required(CreateMatch.as_view(success_url="/"))),
+    url(r"^match/(?P<pk>\d+)", login_required(UpdateMatch.as_view(success_url="/"))),
     url(r"^accounts/", include("allauth.urls")),
     url(r"^admin", include(admin.site.urls)),
 ]

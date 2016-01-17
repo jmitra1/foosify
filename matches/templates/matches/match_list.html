@@ -5,6 +5,7 @@
 <div>Hello! Here are the latest matches:</div>
 <ul>
 {% for match in object_list %}
-  <li>{{ match.date }} -- {{ match.get_players | safe }}</li>
+  <li>Match <a href="match/{{ match.pk }}">#{{ match.pk }}</a> @ {{ match.date }}
+    <br>{{ match.get_players | safe }}</li>
 {% endfor %}
 </ul>
