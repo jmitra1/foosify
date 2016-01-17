@@ -6,6 +6,7 @@ import datetime
 # Create your models here.
 class Match(models.Model):
 	date = models.DateTimeField(auto_now_add=True)
+	end_date = models.DateTimeField(auto_now=True)
 	players = models.ManyToManyField(Player, related_name="matches")
 	winners = models.ManyToManyField(Player, related_name="match_winners")
 	losers = models.ManyToManyField(Player, related_name="match_losers")
