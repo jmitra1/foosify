@@ -2,8 +2,7 @@
 
 <h2>{{ player.user.username }}</h2>
 <p>Your skill is {{ player.rating_mu }} (σ={{ player.rating_sigma }})!</p>
-<p>You've won {{ player.get_wins.count }} game(s)!</p>
-<p>You've played {{ player.matches.count }} game(s), with a {{ player.win_rate }}% win rate!</p>
+<p>You've won {{ player.get_wins.count }} out of {{ player.matches.count }} game(s) ({{ player.win_rate }}%)!</p>
 <p>Here are your latest games:
 <ul>
   {% for match in player.matches.all %}
