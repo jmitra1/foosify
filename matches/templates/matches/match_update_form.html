@@ -1,0 +1,14 @@
+{% include "foosify/base.html" %}
+
+<h2>match lobby</h2>
+
+{% if match.winners.count == 0 or match.winners.count == 0 %}
+  <form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+{% else %}
+  <p>Game completed at {{ match.end_date }} ({{ match.date|timesince:match.end_date }}).</p>
+  <p>Winners: {{ match.winners.all }}</p>
+  <p>Losers: {{ match.losers.all }}</p>
+{% endif %}
