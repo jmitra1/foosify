@@ -31,11 +31,12 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
+          <li><a href="/match/new"><i class="ion-android-add-circle"></i> New Match</a></li>
           <li><a href="#"><i class="ion-trophy"></i> Leaderboards</a></li>
           <li><a href="#"><i class="ion-android-notifications"></i> Notifications</a></li>
           <li><a href="/@{{ request.user }}"><i class="ion-android-person"></i> Profile</a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-android-settings"></i> Settings <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-android-settings"></i> Settings <i class="ion-android-arrow-dropdown"></i></a>
             <ul class="dropdown-menu">
               <li class="dropdown-header">Team Admin</li>
               <li><a href="#">Invite User</a></li>

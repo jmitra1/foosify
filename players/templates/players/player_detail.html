@@ -3,19 +3,37 @@
 {% block content %}
 <div class="row">
   <div class="col-md-12">
-    <h2>{{ player.user.username }}</h2>
-    <p>Your skill is {{ player.rating_mu }} (σ={{ player.rating_sigma }})!</p>
-    <p>You've won {{ player.get_wins.count }} games. Good job.</p>
-    <p>You've lost {{ player.get_losses }} games. Bummer.</p>
-    <p>You've won {{ player.get_wins.count }} out of {{ player.matches.count }} game(s) ({{ player.win_rate }}%)!</p>
-    <p>Here are your latest games:
-    <ul>
-      {% for match in player.matches.all %}
-        <li>{{ match.date }} -- {{ match.get_players | safe }}</li>
-      {% empty %}
-        No games found. Play some foosball!
-      {% endfor %}
-    </p>
+    {% if request.user.username == player.user.username %}
+      <!-- Self template -->
+      <h2>{{ player.user.username }}</h2>
+      <p>Your skill is {{ player.rating_mu }} (σ={{ player.rating_sigma }})!</p>
+      <p>You've won {{ player.get_wins.count }} games. Good job.</p>
+      <p>You've lost {{ player.get_losses }} games. Bummer.</p>
+      <p>You've won {{ player.get_wins.count }} out of {{ player.matches.count }} game(s) ({{ player.win_rate }}%)!</p>
+      <p>Here are your latest games:
+      <ul>
+        {% for match in player.matches.all %}
+          <li>{{ match.date }} -- {{ match.get_players | safe }}</li>
+        {% empty %}
+          No games found. Play some foosball!
+        {% endfor %}
+      </p>
+    {% else %}
+      <!-- Other template -->
+      <h2>{{ player.user.username }}</h2>
+      <p>{{ player.user.username }}'s skill is {{ player.rating_mu }} (σ={{ player.rating_sigma }})!</p>
+      <p>They've won {{ player.get_wins.count }} games.</p>
+      <p>They've lost {{ player.get_losses }} games.</p>
+      <p>They've won {{ player.get_wins.count }} out of {{ player.matches.count }} game(s) ({{ player.win_rate }}%)!</p>
+      <p>Here are their latest games:
+      <ul>
+        {% for match in player.matches.all %}
+          <li>{{ match.date }} -- {{ match.get_players | safe }}</li>
+        {% empty %}
+          No games found. Maybe you should ask them to play?
+        {% endfor %}
+      </p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
