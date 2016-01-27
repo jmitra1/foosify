@@ -16,6 +16,9 @@ class Player(models.Model):
 	def get_wins(self):
 		return self.matches.filter(winners=self)
 
+	def get_losses(self):
+		return self.matches.count() - self.get_wins().count()
+
 	def win_rate(self):
 		wins = self.get_wins().count()
 		matches = self.matches.count()

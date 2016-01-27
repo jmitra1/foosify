@@ -1,7 +1,9 @@
-{% include "foosify/base.html" %}
+{% extends "base.html" %}
 
-<h2>create a match</h2>
-<form action="" method="post">{% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Save</button>
-</form>
+{% block content %}
+  <h2>create a match</h2>
+  <form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+{% endblock %}

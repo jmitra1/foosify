@@ -1,11 +1,13 @@
-{% include "foosify/base.html" %}
+{% extends "base.html" %}
 
-<title>Foosify</title>
-<h2>foosify</h2>
-<div>Hello! Here are the latest matches:</div>
-<ul>
-{% for match in object_list %}
-  <li>Match <a href="match/{{ match.pk }}">#{{ match.pk }}</a> @ {{ match.date }}
-    <br>{{ match.get_players | safe }}</li>
-{% endfor %}
-</ul>
+{% block content %}
+  <title>Foosify</title>
+  <h2>foosify</h2>
+  <div>Hello! Here are the latest matches:</div>
+  <ul>
+  {% for match in object_list %}
+    <li>Match <a href="match/{{ match.pk }}">#{{ match.pk }}</a> @ {{ match.date }}
+      <br>{{ match.get_players | safe }}</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

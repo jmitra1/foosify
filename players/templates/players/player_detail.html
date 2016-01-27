@@ -1,13 +1,21 @@
-{% include "foosify/base.html" %}
+{% extends "base.html" %}
 
-<h2>{{ player.user.username }}</h2>
-<p>Your skill is {{ player.rating_mu }} (σ={{ player.rating_sigma }})!</p>
-<p>You've won {{ player.get_wins.count }} out of {{ player.matches.count }} game(s) ({{ player.win_rate }}%)!</p>
-<p>Here are your latest games:
-<ul>
-  {% for match in player.matches.all %}
-    <li>{{ match.date }} -- {{ match.get_players | safe }}</li>
-  {% empty %}
-    No games found. Play some foosball!
-  {% endfor %}
-</p>
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h2>{{ player.user.username }}</h2>
+    <p>Your skill is {{ player.rating_mu }} (σ={{ player.rating_sigma }})!</p>
+    <p>You've won {{ player.get_wins.count }} games. Good job.</p>
+    <p>You've lost {{ player.get_losses }} games. Bummer.</p>
+    <p>You've won {{ player.get_wins.count }} out of {{ player.matches.count }} game(s) ({{ player.win_rate }}%)!</p>
+    <p>Here are your latest games:
+    <ul>
+      {% for match in player.matches.all %}
+        <li>{{ match.date }} -- {{ match.get_players | safe }}</li>
+      {% empty %}
+        No games found. Play some foosball!
+      {% endfor %}
+    </p>
+  </div>
+</div>
+{% endblock %}
