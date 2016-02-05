@@ -14,3 +14,30 @@ body {
   font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   padding-top: 69px;
 }
+
+.navbar-default .navbar-nav>li>a,
+.navbar-header .navbar-brand {
+  color: white;
+}
+
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:hover {
+  color: white;
+}
+
+.navbar-default {
+  background: #333;
+  border-color: none;
+}
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a:hover {
+  background: #222;
+  color: #888;
+}
+
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+  color: white;
+}
