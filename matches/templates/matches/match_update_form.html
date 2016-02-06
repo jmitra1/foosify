@@ -9,7 +9,7 @@
       <button type="submit" class="btn btn-primary">Save</button>
     </form>
   {% else %}
-    <p>Game completed at {{ match.end_date }} ({{ match.date|timesince:match.end_date }}).</p>
+    <p>Game completed at {{ match.end_date }} ({{ match.date|timesince:match.end_date }} long).</p>
     <p>Winners: {{ match.winners.all }}</p>
     <p>Losers: {{ match.losers.all }}</p>
   {% endif %}
