@@ -309,8 +309,16 @@ input:focus {
   width: 30px;
   text-align: center;
 }
-.sidebar hr {
+.sidebar hr,
+.nav hr {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.sidebar .nav p.label,
+.navbar-collapse .nav p.label {
+  pointer-events: none;
+  margin: 5px 25px;
+  padding: 0;
+  text-transform: uppercase;
 }
 
 .sidebar .logo,
