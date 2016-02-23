@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <title>Foosify</title>
-  <h2>foosify</h2>
-  <div>Hello! Here are the latest matches:</div>
-  <ul>
-  {% for match in object_list %}
-    <li>Match <a href="match/{{ match.pk }}">#{{ match.pk }}</a> @ {{ match.date }}
-      <br>{{ match.get_players | safe }}</li>
-  {% endfor %}
-  </ul>
+<div class="col-md-6">
+  <div class="card">
+    <h2 class="card-title">foosify</h2>
+    <div>Hello! Here are the latest matches:</div>
+    <ul>
+    {% for match in object_list %}
+      <li>Match <a href="match/{{ match.pk }}">#{{ match.pk }}</a> @ {{ match.date }}
+        <br>{{ match.get_players | safe }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
 {% endblock %}

@@ -312,6 +312,7 @@ input:focus {
 .sidebar hr,
 .nav hr {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 25px;
 }
 .sidebar .nav p.label,
 .navbar-collapse .nav p.label {
