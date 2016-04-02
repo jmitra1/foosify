@@ -48,5 +48,3 @@ def create_player(sender, **kwargs):
 	new_player.user = instance
 	new_player.slug = slugify(instance.username)
 	new_player.save()
-
-# Update your stats when a new Match is saved.
