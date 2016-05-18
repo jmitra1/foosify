@@ -23,7 +23,7 @@ urlpatterns = [
 	url(r"^$", MatchList.as_view()),
     url(r"^@(?P<slug>[-\w]+)", PlayerDetail.as_view()),
     url(r"^match/new", login_required(CreateMatch.as_view(success_url="/"))),
-    url(r"^match/(?P<pk>\d+)", login_required(UpdateMatch.as_view(success_url="#"))),
+    url(r"^match/(?P<pk>\d+)", login_required(UpdateMatch.as_view(success_url="#")), name="match_lobby"),
     url(r"^accounts/", include("allauth.urls")),
     url(r"^admin", include(admin.site.urls)),
 ]

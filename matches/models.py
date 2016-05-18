@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from players.models import Player
 import datetime
 import trueskill
@@ -11,7 +12,6 @@ class Match(models.Model):
 	players = models.ManyToManyField(Player, related_name="matches")
 	winners = models.ManyToManyField(Player, related_name="match_winners")
 	losers = models.ManyToManyField(Player, related_name="match_losers")
-	# quality = models.IntegerField()
 
 	def get_players(self):
 		players = self.players.values()
@@ -30,16 +30,47 @@ class Match(models.Model):
 		return string
 
 	def update_player_skill_values(self):
-		""
-		# winner1_rating = trueskill.Rating(winners[0].rating_mu, winners[0].rating_sigma)
-		# match_rating_result = trueskill.rate([(winner1,winner2),(loser1,loser2)])
-		# player.rating_mu = match_rating_result[0][0].mu
-		# player.rating_sigma = match_rating_result[0][0].sigma
+		print "\n Skill updated! \n"
+		# Get the winner rating objects and store them in a tuple.
+		winner_ratings = []
+		for winner in self.winners.all():
+			winner_ratings.append(
+				trueskill.Rating(winner.rating_mu, winner.rating_sigma)
+			)
+		winner_ratings = tuple(winner_ratings,)
+		print winner_ratings
+
+		# Get the loser rating objects and store them in a tuple.
+		loser_ratings = []
+		for loser in self.losers.all():
+			loser_ratings.append(
+				trueskill.Rating(loser.rating_mu, loser.rating_sigma)
+			)
+		loser_ratings = tuple(loser_ratings,)
+
+		# Then get the new ratings from the match.
+		match_rating_result = trueskill.rate([winner_ratings, loser_ratings])
+
+		# Then update the winners and losers based on the returned ratings.
+		i = 0
+		for winner in self.winners.all():
+			winner.rating_mu = match_rating_result[0][i].mu
+			winner.rating_sigma = match_rating_result[0][i].sigma
+			winner.save(update_fields=["rating_mu", "rating_sigma"])
+			i += 1
+		i = 0
+		for loser in self.losers.all():
+			loser.rating_mu = match_rating_result[1][i].mu
+			loser.rating_sigma = match_rating_result[1][i].sigma
+			loser.save(update_fields=["rating_mu", "rating_sigma"])
+			i += 1
 
 	def save(self, *args, **kwargs):
-		# if winners exist (add this condition)...
-		self.update_player_skill_values()
-		super(Model, self).save(*args, **kwargs)
+		# Check if self exists before attempting to update, so as to only update
+		# skill values on the second save, and to have players to update.
+		super(Match, self).save()
+		if self.pk is not None and self.winners.count() > 0 and self.losers.count() > 0:
+			self.update_player_skill_values()
 
 	class Meta:
 		verbose_name_plural = "matches"
