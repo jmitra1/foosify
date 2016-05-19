@@ -12,8 +12,8 @@
       </form>
     {% else %}
       <p>Game completed at {{ match.end_date }} ({{ match.date|timesince:match.end_date }} long).</p>
-      <p>Winners: {{ match.winners.all }}</p>
-      <p>Losers: {{ match.losers.all }}</p>
+      <p>Winners: {{ match.get_winners|safe }}</p>
+      <p>Losers: {{ match.get_losers|safe }}</p>
     {% endif %}
   </div>
 </div>

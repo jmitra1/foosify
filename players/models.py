@@ -14,7 +14,11 @@ class Player(models.Model):
 	rating_sigma = models.FloatField(default=8.33333)
 
 	def get_wins(self):
-		return self.matches.filter(winners=self)
+		wins = self.matches.filter(winners=self).count()
+		if wins > 0:
+			return wins
+		else:
+			return 0
 
 	def get_losses(self):
 		return self.matches.count() - self.get_wins().count()

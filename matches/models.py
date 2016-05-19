@@ -14,8 +14,14 @@ class Match(models.Model):
 	winners = models.ManyToManyField(Player, related_name="match_winners")
 	losers = models.ManyToManyField(Player, related_name="match_losers")
 
-	def get_players(self):
-		players = self.players.values()
+	def get_players(self,type="players"):
+		if type is "winners":
+			players = self.winners.values()
+		else:
+			if type is "losers":
+				players = self.losers.values()
+			else:
+				players = self.players.values()
 		string = ""
 		first = True
 		for player in players:
@@ -23,10 +29,16 @@ class Match(models.Model):
 				first = False
 			else:
 				string += ", "
-			string += "<a href='@" + player["slug"] + "'>"
+			string += "<a href='/@" + player["slug"] + "'>"
 			string += player["slug"]
 			string += "</a>"
 		return string
+
+	def get_winners(self):
+		return self.get_players("winners")
+
+	def get_losers(self):
+		return self.get_players("losers")
 
 	def update_player_skill_values(self):
 		winner_ratings = []
@@ -35,23 +47,19 @@ class Match(models.Model):
 				trueskill.Rating(winner.rating_mu, winner.rating_sigma)
 			)
 		winner_ratings = tuple(winner_ratings)
-
 		loser_ratings = []
 		for loser in self.losers.all():
 			loser_ratings.append(
 				trueskill.Rating(loser.rating_mu, loser.rating_sigma)
 			)
 		loser_ratings = tuple(loser_ratings)
-
 		match_rating_result = trueskill.rate([winner_ratings, loser_ratings])
-
 		i = 0
 		for winner in self.winners.all():
 			winner.rating_mu = match_rating_result[0][i].mu
 			winner.rating_sigma = match_rating_result[0][i].sigma
 			winner.save(update_fields=["rating_mu", "rating_sigma"])
 			i += 1
-
 		i = 0
 		for loser in self.losers.all():
 			loser.rating_mu = match_rating_result[1][i].mu
