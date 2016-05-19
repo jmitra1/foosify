@@ -1,3 +1,12 @@
+li {
+  line-height: 1.5;
+}
+
+select[multiple],
+select[size] {
+  width: 100%;
+}
+
 .logo a {
   /* Adjust left positioning to center text, based on the size of the circle and space. */
   margin-left: -15.72px;
@@ -5,6 +14,21 @@
 
 .card {
   padding: 30px;
+}
+
+.card .win-loss-metric {
+  font-weight: 200;
+  font-size: 28px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.card .win-loss-metric:first-of-type {
+  color: #9EC169;
+}
+
+.card .win-loss-metric:last-of-type {
+  color: #F77E7E;
 }
 
 .card-title {

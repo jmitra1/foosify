@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if request.user.username == player.user.username %}
+  {# if request.user.username == player.user.username #}
     <!-- Self template -->
     <div class="col-md-6">
       <div class="card">
         <h2 class="card-title">{{ player.user.username }}</h2>
-        <p>Your skill is {{ player.rating_mu }} (σ={{ player.rating_sigma }})!</p>
-        <p>You've won {{ player.get_wins.count }} games.</p>
-        <p>You've lost {{ player.get_losses }} games.</p>
-        <p>You've won {{ player.get_wins.count }} out of {{ player.matches.count }} game(s) ({{ player.win_rate }}%)!</p>
+        <div class="col-xs-6 win-loss-metric">{{ player.get_wins.count }} won</div>
+        <div class="col-xs-6 win-loss-metric">{{ player.get_losses }} lost</div>
+        <p style="text-align: center;">{{ player.win_rate }}% win rate in {{ player.matches.count }} game(s)</p>
+        <hr style="clear: both;">
+        <p><strong>Trueskill (μ):</strong> {{ player.rating_mu }}</p>
+        <p><strong>Confidence (σ):</strong> {{ player.rating_sigma }}</p>
       </div>
     </div>
     <div class="col-md-6">
@@ -25,7 +27,7 @@
         </p>
       </div>
     </div>
-  {% else %}
+  {% comment else %}
     <!-- Other template -->
     <div class="col-md-6">
       <div class="card">
@@ -50,4 +52,5 @@
       </div>
     </div>
   {% endif %}
+  {% endcomment %}
 {% endblock %}
