@@ -11,15 +11,10 @@
 	<meta name="viewport" content="width=device-width" />
 
 	{% load staticfiles %}
-	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-	<!-- Animation library -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.min.css' %}" >
-	<!--  Light Bootstrap Table template CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/light-bootstrap-dashboard.css' %}" >
-	<!-- Primary stylesheet -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/foosify.css' %}" >
-	<!--  Fonts and icons -->
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
 	<link href="{% static 'css/pe-icon-7-stroke.css' %}" rel="stylesheet" />
@@ -37,7 +32,6 @@
 
 			<ul class="nav">
 				{% if user.is_authenticated %}
-
 				<!-- Sidebar nav -->
 				<li class="active">
 					<a href="/">
@@ -45,36 +39,27 @@
 						<p>Dashboard</p>
 					</a>
 				</li>
-
 				<li>
 					<a href="/match/new">
 						<i class="pe-7s-plus"></i>
 						<p>New Match</p>
 					</a>
 				</li>
-
 				<li>
 					<a href="#">
 						<i class="pe-7s-add-user"></i>
 						<p>Invite User</p>
 					</a>
 				</li>
-
 				<li>
 					<a href="#">
 						<i class="pe-7s-tools"></i>
 						<p>Team Settings</p>
 					</a>
 				</li>
-
 				<hr>
-
-				<li>
-					<p class="label">Active Players</p>
-				</li>
-
+				<li><p class="label">Active Players</p></li>
 				{% endif %}
-
 			</ul>
 		</div>
 	</div>
